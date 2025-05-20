@@ -1,0 +1,41 @@
+import tkinter as tk
+from datetime import datetime, timedelta
+
+books = [
+    {"title": "�ы뵾�붿뒪", "available": True, "due_date": None, "borrower": None}
+]
+
+def rent_book(index):
+    book = books[index]
+    if book["available"]:
+        borrower = input("���ъ옄 �대쫫: ")
+        book["available"] = False
+        book["due_date"] = datetime.now() + timedelta(days=7)
+        book["borrower"] = borrower
+        print(f"{book['title']} ���� �꾨즺 / 諛섎궔��: {book['due_date']:%Y-%m-%d}")
+#梨�  諛섎궔�섎뒗 �⑥닔
+def return_book(index):
+    book = books[index]
+    if not book["available"]:
+        book["available"] = True
+        book["due_date"] = None
+        book["borrower"] = None
+        print(f"{book['title']} 諛섎궔 �꾨즺")
+
+def get_visible_books(query):
+    return [book for book in books if query.lower() in book["title"].lower()]
+#梨� 寃��됲븯�� �⑥닔
+def search_books():
+    filtered = get_visible_books(entry_search.get())
+    print(filtered)
+
+root = tk.Tk()
+root.title("�꾩꽌愿� ���� �꾨줈洹몃옩")
+root.geometry("700x700")
+
+entry_search = tk.Entry(root)
+entry_search.pack()
+tk.Button(root, text="寃���", command=search_books).pack()
+tk.Button(root, text="珥덇린��", command=lambda: print(books)).pack()
+
+root.mainloop()

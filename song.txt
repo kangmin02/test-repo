@@ -1,0 +1,14 @@
+from datetime import datetime, timedelta
+
+books = [
+    {"title": "�ы뵾�붿뒪", "available": True, "due_date": None, "borrower": None}
+]
+
+def rent_book(index):
+    book = books[index]
+    if book["available"]:
+        borrower = input("���ъ옄 �대쫫: ")
+        book["available"] = False
+        book["due_date"] = datetime.now() + timedelta(days=7)
+        book["borrower"] = borrower
+        print(f"{book['title']} ���� �꾨즺 / 諛섎궔��: {book['due_date']:%Y-%m-%d}")
